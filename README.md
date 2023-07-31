@@ -40,4 +40,4 @@ This Chatbot is an AI-powered chatbot designed to answer customer queries based 
 Enter your query in the chat box and press enter or click the send button. The chatbot will respond with the most relevant answer from the FAQ list.
 
 ## License
-This project is licensed under the GNU License. See the [LICENSE](LICENSE.md) file for more information.
+This project is licensed under the GNU V3 License. See the [LICENSE](LICENSE) file for more information.
