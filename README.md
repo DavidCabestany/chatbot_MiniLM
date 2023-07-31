@@ -13,7 +13,7 @@ This Chatbot is an AI-powered chatbot designed to answer customer queries based 
 ## Setup and Installation
 1. Clone the repository:
     ```
-    git clone https://github.com/DavidCabestany/chatbot_MiniLM
+    git clone [https://github.com/DavidCabestany/chatbot_MiniLM](https://github.com/DavidCabestany/chatbot_MiniLM.git)
     cd task_chatbot
     ```
 
