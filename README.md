@@ -1,6 +1,6 @@
 # Tech_task Chatbot
 
-This Chatbot is an AI-powered chatbot designed to answer customer queries based on an FAQ Database. It's a flask web application, using sentence transformers, and the Faiss library for efficient searching and retrieval of responses.
+This Chatbot is designed to answer customer queries based on an FAQ Database. It's a flask web application, using sentence transformers, and the Faiss library for efficient searching and retrieval of responses.
 
 
 
