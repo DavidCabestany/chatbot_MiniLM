@@ -24,7 +24,6 @@ def get_bot_response():
                 'questions': [
                     "Do you have a refund policy?", 
                     "What Leverage is Available?" ,
-                    "What payment methods can I use?" ,
                 ]
             },
             {
@@ -33,17 +32,13 @@ def get_bot_response():
                     "Can I Reset My Challenge?",
                     "Do I Trade Live or Demo? ",
                     "How Do I Become a Funded Trader?" ,
-                    "How Does the Overall Drawdown Work? ",
-                    "I Have Passed Phase 2, what is next?" ,
                 ]
             },
             {
                 'message': '<b>About The Funded Account:</b> ',
                 'questions': [
                     "Am I Required to Have a Verified Account?",
-                    "Do I Trade Live or Demo? ",
                     "Can I Scale My Account? ",
-                    "Do I Trade With Real Funds?" ,
                     "How Can I Withdraw Profits?" ,
                 ]
             },
