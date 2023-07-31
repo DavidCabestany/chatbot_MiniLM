@@ -1,0 +1,37 @@
+Operations Chat Bot Development challenge
+As a so&ware engineer with experience in Python, TypeScript, and AI, we would like you to develop a chat bot that can answer customer ques@ons based on an FAQ list. In this code challenge, you will be using OpenAI, vector databases, and the FAQs from FunderPro.com, a prop technology website.
+Requirements:
+1. Use Python or TypeScript for the implementa@on.
+2. U@lize OpenAI API or any other appropriate AI library/toolkit for natural language
+processing.
+3. Implement a func@on or a class that takes user input (customer query) and returns
+an appropriate response from the FAQ list.
+4. Preprocess the data from FAQ for
+efficient searching and retrieval.
+5. Use vector databases (e.g., Elas@csearch, Faiss, or any other suitable tool) to store
+and index the preprocessed FAQ data.
+6. Implement a search mechanism that can retrieve the most relevant FAQ based on
+user input.
+7. Handle cases where the customer query does not match any FAQ and provide an
+appropriate response.
+8. Develop a simple user interface (console-based or web-based using technologies
+such as ReactJS) to interact with the chat bot and test its func@onality.
+9. Provide a docker-compose file and a simple, easy README to setup and run the
+project locally
+Addi/onal Guidelines:
+1. Design and organize your code for maintainability and extensibility.
+2. Follow best prac@ces for error handling and code documenta@on.
+3. Use appropriate data structures and algorithms for efficient searching and retrieval.
+4. Make sure the chat bot provides accurate and meaningful responses.
+5. Write clear instruc@ons on how to set up and run your code.
+6. You can use any open-source libraries or frameworks as long as they comply with the
+challenge requirements.
+
+Evalua/on Criteria:
+1. Correctness: Does the chat bot provide accurate and relevant responses based on the customer query?
+2. Code Quality: Is the code well-structured, readable, and maintainable?
+3. Efficiency: Does the implementa@on demonstrate efficient search and retrieval of
+FAQs?
+4. Documenta@on: Are the code comments, instruc@ons, and explana@ons clear and
+concise?
+5. User Experience: Does the chat bot provide a seamless and intui@ve user interac@on?

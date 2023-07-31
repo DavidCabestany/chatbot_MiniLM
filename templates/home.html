@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5dc; /* Soft beige background */
+            font-family: Arial, sans-serif;
+        }
+        .chat-wrapper {
+            width: 80%; /* Control the width of the chat interface */
+            max-width: 800px; /* Set a max width */
+            margin: 0 auto; /* Center the chat interface */
+        }
+        #chatbox {
+            height: 600px;
+            margin: 5px;
+            padding: 10px;
+            overflow: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff; /* White chatbox */
+            background-image: url('chat_background.png');
+            background-size: cover;
+            display: flex; /* Use Flexbox to arrange bubbles in rows */
+            flex-direction: column; /* Stack bubbles in columns */
+            align-items: flex-start; /* Align bubbles to the left side */
+        }
+        #textInput {
+            width: 97%;
+            height: 40px;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+        #buttonInput {
+            width: 100%;
+            height: 40px;
+            margin: 5px 0;
+            border: none;
+            background-color: #6ecc90; /* Powder blue */
+            color: #000; /* Black text */
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+        #buttonInput:hover {
+            background-color: #46b265; /* Lighter blue */
+        }
+        .userText {
+            color: #000; /* Black user text */
+            margin: 5px;
+            padding: 10px;
+            background-color: #f0e68c; /* Khaki user bubble */
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: right; /* Align user text to the right */
+            align-self: flex-end; /* Right-align user bubbles */
+        }
+        .botText {
+            color: #000; /* Black bot text */
+            margin: 5px;
+            padding: 10px;
+            background-color: #b0e0e6; /* Powder blue bot bubble */
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            align-self: flex-start; /* Left-align bot bubbles */
+        }
+        .userText::before {
+            content: "You: ";
+            font-weight: bold;
+        }
+        .botText::before {
+            content: "Bot: ";
+            font-weight: bold;
+        }
+        .userText,
+        .botText {
+            max-width: 80%; /* Limit maximum bubble width */
+            display: inline-flex; /* Bubbles fit text */
+            flex-wrap: wrap; /* Allow text to wrap inside the bubbles */
+        }
+        .userText + .userText,
+        .botText + .botText {
+            margin-top: 10px; /* Add space between messages */
+        }
+        .typing-indicator {
+            margin-top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #888;
+            animation: typingIndicatorAnimation 1s infinite;
+        }
+        @keyframes typingIndicatorAnimation {
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>        
+</head>
+<body>
+    <div class="chat-wrapper">
+        <div id="chatbox">
+            <p class="botText"><span>Hello there! I'm your Red-Acre assistant, I am here to help you. <br> You can ask me anything or type 'help' if you need some ideas on questions.</span></p>
+        </div>
+        <input id="textInput" type="text" name="msg" placeholder="Ask something...">
+        <input id="buttonInput" type="submit" value="Send">
+    </div>
+    <script>
+        function formatHyperlinks(text) {
+            // Replace [HYPERLINK: URL] with <a href="URL">URL</a>
+            return text.replace(/\[HYPERLINK: (.*?)\]/g, '<a href="$1" target="_blank">$1</a>');
+        }
+        function getBotResponse() {
+            var rawText = $("#textInput").val();
+            var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+            $.get("/get", { msg: rawText }).done(function(data) {
+                if (Array.isArray(data)) {
+                    // if the response is an array, handle each dictionary in the array
+                    for (var i = 0; i < data.length; i++) {
+                        var botHtml = '<p class="botText"><span>' + data[i].message + '</span></p>';
+                        $("#chatbox").append(botHtml);
+                        for (var j = 0; j < data[i].questions.length; j++) {
+                            var button = document.createElement("button");
+                            button.innerText = data[i].questions[j];
+                            button.onclick = function() {
+                                // when the button is clicked, append a user message with the button text
+                                var userHtml = '<p class="userText"><span>' + this.innerText + '</span></p>';
+                                $("#chatbox").append(userHtml);
+                                document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+                                // then send a request to get the answer to the question
+                                $.get("/get", {msg: this.innerText}).done(function(data) {
+                                    data = formatHyperlinks(data);
+                                    var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+                                    $("#chatbox").append(botHtml);
+                                    document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+                                });
+                            };
+                            // add the button to the chatbox
+                            $("#chatbox").append(button);
+                        }
+                    }
+                } else {
+                    // if the response is not an array, handle it as before
+                    data = formatHyperlinks(data);
+                    var botHtml = '<p class="botText"><span></span></p>';  // create an empty span
+                    var botSpan = $(botHtml).find('span')[0];
+                    if (data.includes('<br>')) {
+                        botSpan.innerHTML = data;  // use innerHTML if the response contains <br>
+                    } else {
+                        botSpan.innerText = data;  // use innerText otherwise
+                    }
+                    $("#chatbox").append(botSpan.parentElement.outerHTML);
+                    document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+                }
+            });
+        }
+        $("#textInput").keypress(function(e) {
+            if(e.which == 13) {
+                getBotResponse();
+            }
+        });
+        $("#buttonInput").click(function() {
+            getBotResponse();
+        });
+    </script>
+</body>
+</html>
