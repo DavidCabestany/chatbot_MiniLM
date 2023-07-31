@@ -5,9 +5,9 @@ This Chatbot is an AI-powered chatbot designed to answer customer queries based 
 
 
 ## Features
-- **Natural Language Processing**: Utilizes state-of-the-art NLP models for understanding user input.
+- **Natural Language Processing**: Utilizes Openai NLP models for processing the user input.
 - **Fast and Accurate**: Uses the Faiss library for efficient indexing and searching of FAQ data.
-- **Interactive Interface**: Provides a simple web-based user interface for interacting with the chatbot.
+- **Interactive Interface**: Provides a web-based user interface for interacting with the chatbot.
 - **Dockerized Application**: The application is dockerized for ease of deployment and scaling.
 
 ## Setup and Installation
